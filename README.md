@@ -11,15 +11,7 @@ These demos are purposely written in a simple and clear style. You will find no 
 - [React Testing Demo](https://github.com/ruanyf/react-testing-demo)
 - [A boilerplate for React-Babel-Webpack project](https://github.com/ruanyf/react-babel-webpack-boilerplate)
 
-## How to use
 
-First copy the repo into your disk.
-
-```bash
-$ git clone git@github.com:ruanyf/react-demos.git
-```
-
-Then play with the source files under the repo's demo* directories.
 
 ## HTML Template
 
@@ -43,168 +35,43 @@ Then play with the source files under the repo's demo* directories.
 ```
 
 ## Index
+1.React 简介：
+React 是一个用于构建用户界面的 JAVASCRIPT 库。
+React主要用于构建UI，很多人认为 React 是 MVC 中的 V（视图）。
+React 起源于 Facebook 的内部项目，用来架设 Instagram 的网站，并于 2013 年 5 月开源。
+React 拥有较高的性能，代码逻辑非常简单，越来越多的人已开始关注和使用它。
 
-1. [Render JSX](#demo01-render-jsx)
-1. [Use JavaScript in JSX](#demo02-use-javascript-in-jsx)
-1. [Use array in JSX](#demo03-use-array-in-jsx)
-1. [Define a component](#demo04-define-a-component)
-1. [this.props.children](#demo05-thispropschildren)
-1. [PropTypes](#demo06-proptypes)
-1. [Finding a DOM node](#demo07-finding-a-dom-node)
-1. [this.state](#demo08-thisstate)
-1. [Form](#demo09-form)
-1. [Component Lifecycle](#demo10-component-lifecycle)
-1. [Ajax](#demo11-ajax)
-1. [Display value from a Promise](#demo12-display-value-from-a-promise)
-1. [Server-side rendering](#demo13-server-side-rendering)
-
+##Second
+2：React 特点
+ 1.声明式设计 −React采用声明范式，可以轻松描述应用。
+ 2.高效 −React通过对DOM的模拟，最大限度地减少与DOM的交互。
+ 3.灵活 −React可以与已知的库或框架很好地配合。
+ 4.JSX − JSX 是 JavaScript 语法的扩展。React 开发不一定使用 JSX ，但我们建议使用它。
+ 5.组件 − 通过 React 构建组件，使得代码更加容易得到复用，能够很好的应用在大项目的开发中。
+ 6.单向响应的数据流 − React 实现了单向响应的数据流，从而减少了重复代码，这也是它为什么比传统数据绑定更简单。
 ---
 
-## Demo01: Render JSX
+3：React JSX
+React 使用 JSX 来替代常规的 JavaScript。
+JSX 是一个看起来很像 XML 的 JavaScript 语法扩展。
+我们不需要一定使用 JSX，但它有以下优点：
+JSX 执行更快，因为它在编译为 JavaScript 代码后进行了优化。
+它是类型安全的，在编译过程中就能发现错误。
+使用 JSX 编写模板更加简单快速。
 
-[demo](http://ruanyf.github.io/react-demos/demo01/) / [source](https://github.com/ruanyf/react-demos/blob/master/demo01/index.html)
 
-The template syntax in React is called [JSX](http://facebook.github.io/react/docs/displaying-data.html#jsx-syntax). It is allowed in JSX to put HTML tags directly into JavaScript codes. `ReactDOM.render()` is the method which translates JSX into HTML, and renders it into the specified DOM node.
 
-```js
-ReactDOM.render(
-  <h1>Hello, world!</h1>,
-  document.getElementById('example')
-);
-```
+## Demo01:基础用户 js引用格式.
 
-Attention, you have to use `<script type="text/babel">` to indicate JSX codes, and include `browser.min.js`, which is a [browser version](https://babeljs.io/docs/usage/browser/) of Babel and could be get inside a [babel-core@5](https://www.npmjs.com/package/babel-core) npm release, to actually perform the transformation in the browser.
+## Demo02: 可以在JSX中使用JS变量
 
-Before v0.14, React use `JSTransform.js` to translate `<script type="text/jsx">`. It has been deprecated ([more info](https://facebook.github.io/react/blog/2015/06/12/deprecating-jstransform-and-react-tools.html)).
+## Demo03: 可以在JSX中使用数组
 
-## Demo02: Use JavaScript in JSX
+## Demo04: 可以封装组建，并且定义组建的属性
 
-[demo](http://ruanyf.github.io/react-demos/demo02/) / [source](https://github.com/ruanyf/react-demos/blob/master/demo02/index.html)
+## Demo05: React.Children
 
-You could also use JavaScript in JSX. It takes angle brackets (&lt;) as the beginning of HTML syntax, and curly brackets (`{`) as the beginning of JavaScript syntax.
-
-```js
-var names = ['Alice', 'Emily', 'Kate'];
-
-ReactDOM.render(
-  <div>
-  {
-    names.map(function (name) {
-      return <div>Hello, {name}!</div>
-    })
-  }
-  </div>,
-  document.getElementById('example')
-);
-```
-
-## Demo03: Use array in JSX
-
-[demo](http://ruanyf.github.io/react-demos/demo03/) / [source](https://github.com/ruanyf/react-demos/blob/master/demo03/index.html)
-
-If a JavaScript variable is an array, JSX will implicitly concat all members of the array.
-
-```js
-var arr = [
-  <h1>Hello world!</h1>,
-  <h2>React is awesome</h2>,
-];
-ReactDOM.render(
-  <div>{arr}</div>,
-  document.getElementById('example')
-);
-```
-
-## Demo04: Define a component
-
-[demo](http://ruanyf.github.io/react-demos/demo04/) / [source](https://github.com/ruanyf/react-demos/blob/master/demo04/index.html)
-
-`React.createClass()` creates a component class, which implements a render method to return an component instance of the class. You don't need to call `new` on the class in order to get an instance, just use it as a normal HTML tag.
-
-```javascript
-var HelloMessage = React.createClass({
-  render: function() {
-    return <h1>Hello {this.props.name}</h1>;
-  }
-});
-
-ReactDOM.render(
-  <HelloMessage name="John" />,
-  document.getElementById('example')
-);
-```
-
-Components would have attributes, and you can use `this.props.[attribute]` to access them, just like `this.props.name` of `<HelloMessage name="John" />` is John.
-
-Please remember the first letter of the component's name must be capitalized, otherwise React will throw an error. For instance, `HelloMessage` as a component's name is OK, but `helloMessage` is not allowed. And a React component should only have one top child node.
-
-```javascript
-// wrong
-var HelloMessage = React.createClass({
-  render: function() {
-    return <h1>
-      Hello {this.props.name}
-    </h1><p>
-      some text
-    </p>;
-  }
-});
-
-// correct
-var HelloMessage = React.createClass({
-  render: function() {
-    return <div>
-      <h1>Hello {this.props.name}</h1>
-      <p>some text</p>
-    </div>;
-  }
-});
-```
-
-## Demo05: this.props.children
-
-[demo](http://ruanyf.github.io/react-demos/demo05/) / [source](https://github.com/ruanyf/react-demos/blob/master/demo05/index.html)
-
-React uses `this.props.children` to access a component's children nodes.
-
-```javascript
-var NotesList = React.createClass({
-  render: function() {
-    return (
-      <ol>
-      {
-        React.Children.map(this.props.children, function (child) {
-          return <li>{child}</li>;
-        })
-      }
-      </ol>
-    );
-  }
-});
-
-ReactDOM.render(
-  <NotesList>
-    <span>hello</span>
-    <span>world</span>
-  </NotesList>,
-  document.getElementById('example')
-);
-```
-
-Please be mindful that the value of `this.props.children` has three possibilities. If the component has no children node, the value is `undefined`; If single children node, an object; If multiple children nodes, an array. You should be careful to handle it.
-
-React gave us an utility [`React.Children`](https://facebook.github.io/react/docs/top-level-api.html#react.children) for dealing with the `this.props.children`'s opaque data structure. You could use `React.Children.map` to iterate `this.props.children` without worring its data type being `undefined` or `object`. Check [official document](https://facebook.github.io/react/docs/top-level-api.html#react.children) for more methods `React.Children` offers.
-
-## Demo06: PropTypes
-
-[demo](http://ruanyf.github.io/react-demos/demo06/) / [source](https://github.com/ruanyf/react-demos/blob/master/demo06/index.html)
-
-Components have many specific attributes which are called ”props” in React and can be of any type.
-
-Sometimes you need a way to validate these props. You don't want users have the freedom to input anything into your components.
-
-React has a solution for this and it's called PropTypes.
-
+## Demo06: PropTypes属性验证
 ```javascript
 var MyTitle = React.createClass({
   propTypes: {
